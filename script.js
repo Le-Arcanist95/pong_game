@@ -58,8 +58,17 @@ function movePaddle(event) {
     }
 }
 
+function moveComputerPaddle() {
+    if (computerY + paddleHeight / 2 < ballY) {
+        computerY += 4;
+    } else {
+        computerY -= 4;
+    }
+}
+
 function gameLoop() {
     moveBall();
+    moveComputerPaddle();
     draw();
 }
 
