@@ -14,6 +14,8 @@ let ballX = canvas.width / 2;
 let ballY = canvas.height / 2;
 let ballSpeedX = 5;
 let ballSpeedY = 5;
+let playerScore = 0;
+let computerScore = 0;
 
 function drawRect(x, y, width, height, color) {
     context.fillStyle = color;
@@ -33,6 +35,17 @@ function draw() {
     drawRect(0, playerY, paddleWidth, paddleHeight, "#fff"); //Player paddle
     drawRect(canvas.width - paddleWidth, computerY, paddleWidth, paddleHeight, "#fff"); //Computer paddle
     drawCircle(ballX, ballY, ballRadius, "#fff"); //Ball
+
+    //Scoreboard
+    context.fillStyle = "#fff";
+    context.fillText("Player: " + playerScore, 50, 50);
+    context.fillText("Computer: " + computerScore, canvas.width - 150, 50);
+}
+
+function resetBall() {
+    ballX = canvas.width / 2;
+    ballY = canvas.height / 2;
+    ballSpeedX = -ballSpeedX;
 }
 
 function moveBall() {
@@ -47,6 +60,7 @@ function moveBall() {
         if(ballY > playerY && ballY < playerY + paddleHeight) {
             ballSpeedX = -ballSpeedX;
         } else {
+            computerScore++;
             resetBall();
         }
     }
@@ -55,7 +69,8 @@ function moveBall() {
         if (ballY > computerY && ballY < computerY + paddleHeight) {
             ballSpeedX = -ballSpeedX;
         } else {
-            resetBall()
+            playerScore++;
+            resetBall();
         }
     }
 }
@@ -76,12 +91,6 @@ function moveComputerPaddle() {
     } else {
         computerY -= 4;
     }
-}
-
-function resetBall() {
-    ballX = canvas.width / 2;
-    ballY = canvas.height / 2;
-    ballSpeedX = -ballSpeedX;
 }
 
 function gameLoop() {
