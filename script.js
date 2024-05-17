@@ -42,9 +42,21 @@ function moveBall() {
     if (ballY + ballRadius > canvas.height || ballY - ballRadius < 0) {
         ballSpeedY = -ballSpeedY;
     }
+    
+    if (ballX - ballRadius < 0) {
+        if(ballY > playerY && ballY < playerY + paddleHeight) {
+            ballSpeedX = -ballSpeedX;
+        } else {
+            resetBall();
+        }
+    }
 
-    if (ballX + ballRadius > canvas.width || ballX - ballRadius < 0) {
-        ballSpeedX = -ballSpeedX
+    if (ballX + ballRadius > canvas.width) {
+        if (ballY > computerY && ballY < computerY + paddleHeight) {
+            ballSpeedX = -ballSpeedX;
+        } else {
+            resetBall()
+        }
     }
 }
 
@@ -64,6 +76,12 @@ function moveComputerPaddle() {
     } else {
         computerY -= 4;
     }
+}
+
+function resetBall() {
+    ballX = canvas.width / 2;
+    ballY = canvas.height / 2;
+    ballSpeedX = -ballSpeedX;
 }
 
 function gameLoop() {
