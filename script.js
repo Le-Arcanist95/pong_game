@@ -1,9 +1,11 @@
+// Initialization
 const canvas = document.getElementById("pongCanvas");
 const context = canvas.getContext("2d");
 
 canvas.width = 800;
 canvas.height = 600;
 
+// Variables
 const paddleWidth = 10;
 const paddleHeight = 100;
 const ballRadius = 10;
@@ -16,7 +18,22 @@ let ballSpeedX = 5;
 let ballSpeedY = 5;
 let playerScore = 0;
 let computerScore = 0;
+let playerSpeed = 6;
+let upPressed = false;
+let downPressed = false;
 
+// Event Listeners
+document.addEventListener("keydown", function(event) {
+    if (event.key === "ArrowUp") upPressed = true;
+    if (event.key === "ArrowDown") downPressed = true;
+});
+
+document.addEventListener("keyup", function(event) {
+    if (event.key === "ArrowUp") upPressed = false;
+    if (event.key === "ArrowDown") downPressed = false;
+});
+
+// Functions
 function drawRect(x, y, width, height, color) {
     context.fillStyle = color;
     context.fillRect(x, y, width, height);
@@ -75,13 +92,12 @@ function moveBall() {
     }
 }
 
-function movePaddle(event) {
-    const key = event.key;
-
-    if(key === "ArrowUp" && playerY > 0) {
-        playerY -= 20;
-    } else if (key === "ArrowDown" && playerY < canvas.height - paddleHeight) {
-        playerY += 20;
+function movePlayePaddle() {
+    if(upPressed && playerY > 0) {
+        playerY -= playerSpeed;
+    }
+    if (downPressed && playerY < canvas.height - paddleHeight) {
+        playerY += playerSpeed;
     }
 }
 
@@ -94,6 +110,7 @@ function moveComputerPaddle() {
 }
 
 function gameLoop() {
+    movePlayerPaddle();
     moveBall();
     moveComputerPaddle();
     draw();
