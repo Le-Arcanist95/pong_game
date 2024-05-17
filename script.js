@@ -1,6 +1,8 @@
 // Initialization
 const canvas = document.getElementById("pongCanvas");
 const context = canvas.getContext("2d");
+const paddleHitSound = new Audio("./resources/ping-pong_ball_hit.wav");
+const scoreSound = new Audio("./resources/point_tick.wav");
 
 canvas.width = 800;
 canvas.height = 600;
@@ -78,8 +80,10 @@ function moveBall() {
     if (ballX - ballRadius < 0) {
         if(ballY > playerY && ballY < playerY + paddleHeight) {
             ballSpeedX = -ballSpeedX;
+            paddleHitSound.play();
         } else {
             computerScore++;
+            scoreSound.play();
             resetBall();
         }
     }
@@ -87,8 +91,10 @@ function moveBall() {
     if (ballX + ballRadius > canvas.width) {
         if (ballY > computerY && ballY < computerY + paddleHeight) {
             ballSpeedX = -ballSpeedX;
+            paddleHitSound.play();
         } else {
             playerScore++;
+            scoreSound.play();
             resetBall();
         }
     }
