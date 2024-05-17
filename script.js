@@ -19,6 +19,8 @@ let ballSpeedY = 5;
 let playerScore = 0;
 let computerScore = 0;
 let playerSpeed = 6;
+let computerSpeed = 4;
+let computerDelay = 0;
 let upPressed = false;
 let downPressed = false;
 
@@ -92,7 +94,7 @@ function moveBall() {
     }
 }
 
-function movePlayePaddle() {
+function movePlayerPaddle() {
     if(upPressed && playerY > 0) {
         playerY -= playerSpeed;
     }
@@ -102,10 +104,15 @@ function movePlayePaddle() {
 }
 
 function moveComputerPaddle() {
-    if (computerY + paddleHeight / 2 < ballY) {
-        computerY += 4;
+    if (computerDelay === 0) {
+        if (computerY + paddleHeight / 2 < ballY) {
+            computerY += computerSpeed;
+        } else {
+            computerY -= computerSpeed;
+        }
+        computerDelay = 5;
     } else {
-        computerY -= 4;
+        computerDelay--;
     }
 }
 
