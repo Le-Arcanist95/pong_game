@@ -48,6 +48,16 @@ function moveBall() {
     }
 }
 
+function movePaddle(event) {
+    const key = event.key;
+
+    if(key === "ArrowUp" && playerY > 0) {
+        playerY -= 20;
+    } else if (key === "ArrowDown" && playerY < canvas.height - paddleHeight) {
+        playerY += 20;
+    }
+}
+
 function gameLoop() {
     moveBall();
     draw();
